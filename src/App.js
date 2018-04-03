@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Route, Link, Switch } from "react-router-dom";
 import FrequencyAnalysis from './Components/FrequencyAnalysis'
-import './index.css';
+import Welcome from "./Components/Welcome";
 
 class App extends Component {
   render() {
@@ -10,7 +10,9 @@ class App extends Component {
         <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
           <header className="mdl-layout__header">
             <div className="mdl-layout__header-row">
-              <span className="mdl-layout-title">WebCAP</span>
+              <Link to="/" className="mdl-navigation__link">
+                <span className="mdl-layout-title">WebCAP</span>
+              </Link>
               <div className="mdl-layout-spacer"></div>
               <nav className="mdl-navigation mdl-layout--large-screen-only">
                 <a className="mdl-navigation__link"
@@ -25,14 +27,12 @@ class App extends Component {
             <span className="mdl-layout-title">WebCAP</span>
             <nav className="mdl-navigation">
               <Link to="/frequency" className="mdl-navigation__link">Frequency Analysis</Link>
-              <a className="mdl-navigation__link" href="">Link</a>
-              <a className="mdl-navigation__link" href="">Link</a>
-              <a className="mdl-navigation__link" href="">Link</a>
             </nav>
           </div>
           <main className="mdl-layout__content">
             <div className="page-content">
               <Switch>
+                <Route exact path="/" component={Welcome} />
                 <Route exact path="/frequency" component={FrequencyAnalysis} />
               </Switch>
             </div>
