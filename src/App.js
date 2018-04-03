@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Route, Link, Switch } from "react-router-dom";
+import { Route, Link, Switch } from "react-router-dom";
 import FrequencyAnalysis from './Components/FrequencyAnalysis'
 import Welcome from "./Components/Welcome";
 
