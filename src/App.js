@@ -17,7 +17,6 @@ class App extends Component {
 
   handlePlaintextChange(plaintext) {
     this.setState ({plaintext: plaintext}, function () {
-      console.log (this.state.plaintext);
     });
   }
 
