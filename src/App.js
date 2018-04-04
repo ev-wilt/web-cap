@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link, Switch } from "react-router-dom";
 import FrequencyAnalysis from './Components/FrequencyAnalysis'
-import Welcome from "./Components/Welcome";
+import TextInput from "./Components/TextInput";
 
 class App extends Component {
   render() {
@@ -30,11 +30,15 @@ class App extends Component {
             </nav>
           </div>
           <main className="mdl-layout__content">
-            <div className="page-content">
-              <Switch>
-                <Route exact path="/" component={Welcome} />
-                <Route exact path="/frequency" component={FrequencyAnalysis} />
-              </Switch>
+            <div className="mdl-grid">
+              <div className="mdl-cell mdl-cell--6-col">
+                <Switch>
+                  <Route exact path="/frequency" component={FrequencyAnalysis} />
+                </Switch>
+              </div>
+              <div className="mdl-cell mdl-cell--6-col">
+                <TextInput/>
+              </div>
             </div>
           </main>
         </div>
