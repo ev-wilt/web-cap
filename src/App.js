@@ -4,6 +4,31 @@ import FrequencyAnalysis from './Components/FrequencyAnalysis'
 import TextInput from "./Components/TextInput";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ciphertext: '',
+      plaintext: ''
+    };
+
+    this.handlePlaintextChange = this.handlePlaintextChange.bind(this);
+    this.handleCiphertextChange = this.handleCiphertextChange.bind(this);
+  }
+
+  handlePlaintextChange(plaintext) {
+    this.setState ({plaintext: plaintext}, function () {
+      console.log (this.state.plaintext);
+    });
+  }
+
+  handleCiphertextChange(ciphertext) {
+    this.setState({ciphertext: ciphertext});
+  }
+
+  handleInput(state) {
+    this.setState(state);
+  }
+
   render() {
     return (
       <div className="App">
@@ -33,11 +58,17 @@ class App extends Component {
             <div className="mdl-grid">
               <div className="mdl-cell mdl-cell--6-col">
                 <Switch>
-                  <Route exact path="/frequency" component={FrequencyAnalysis} />
+                  <Route exact path="/frequency" render={() => (
+                    <FrequencyAnalysis state={this.state} />
+                  )}/>
                 </Switch>
               </div>
               <div className="mdl-cell mdl-cell--6-col">
-                <TextInput/>
+                <TextInput
+                  state={this.state}
+                  handlePlaintextChange={this.handlePlaintextChange}
+                  handleCiphertextChange={this.handleCiphertextChange}
+                />
               </div>
             </div>
           </main>
