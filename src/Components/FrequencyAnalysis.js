@@ -4,21 +4,20 @@ import Charts from 'fusioncharts/fusioncharts.charts';
 import ReactFC from 'react-fusioncharts';
 
 Charts(FusionCharts);
-let chartConfigs = {
-  type: "Column2D",
-  className: "fc-column2d",
-  dataFormat: "JSON",
-  dataSource: {
-      chart:{},
-      data: []
-  }
-};
 
 class FrequencyAnalysis extends Component {
   constructor(props) {
     super (props);
     this.state = {
-      cipherArray: []
+      type: 'column2d',
+      width: 500,
+      height: 300,
+      dataSource: {
+        chart:{
+          caption: 'Character Frequency',
+        },
+        data: []
+      }
     };
 
     this.splitCipher = this.splitCipher.bind(this);
@@ -26,15 +25,30 @@ class FrequencyAnalysis extends Component {
 
   splitCipher(splitSize) {
     let ciphertext = this.props.state.ciphertext;
-    ciphertext = ciphertext.trim();
-    this.setState({cipherArray: []});
+    ciphertext = ciphertext.split(" ").join("");
+    let newDataSource = {
+      chart:{
+        caption: 'Character Frequency',
+      },
+      data: []
+    };
 
     while(ciphertext !== "") {
-      this.state.cipherArray.push(ciphertext.slice(0, splitSize + 1));
-      ciphertext = ciphertext.slice(splitSize + 1);
+      let currentString = ciphertext.slice(0, splitSize + 1);
+      let value = ciphertext.split(currentString).length - 1;
+
+      newDataSource.data.push({
+        label: currentString,
+        value: value
+      });
+
+      ciphertext = ciphertext.split(currentString).join("");
+      console.log(ciphertext);
     }
 
-    console.log(this.state.cipherArray);
+    this.setState({
+      dataSource: newDataSource
+    });
   }
 
   render() {
@@ -76,7 +90,7 @@ class FrequencyAnalysis extends Component {
             id="frequency-output"
           />
           <h4>Graphical Analysis</h4>
-          <ReactFC {...chartConfigs} />
+          <ReactFC {...this.state} />
         </div>
       </div>
     );
