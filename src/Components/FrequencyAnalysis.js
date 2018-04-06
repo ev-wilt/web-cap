@@ -33,17 +33,23 @@ class FrequencyAnalysis extends Component {
       data: []
     };
 
-    while(ciphertext !== "") {
-      let currentString = ciphertext.slice(0, splitSize + 1);
+    for (let i = 0; i < ciphertext.length; ++i) {
+      let isInData = false;
+      let currentString = ciphertext.slice(i, i + splitSize + 1);
       let value = ciphertext.split(currentString).length - 1;
 
-      newDataSource.data.push({
-        label: currentString,
-        value: value
-      });
+      for (let j = 0; j < newDataSource.data.length; ++j) {
+        if (newDataSource.data[j].label === currentString) {
+          isInData = true;
+        }
+      }
 
-      ciphertext = ciphertext.split(currentString).join("");
-      console.log(ciphertext);
+      if (isInData === false && currentString.length === splitSize + 1) {
+        newDataSource.data.push({
+          label: currentString,
+          value: value
+        });
+      }
     }
 
     this.setState({
@@ -84,7 +90,7 @@ class FrequencyAnalysis extends Component {
           </div>
           <textarea
             readOnly={true}
-            value={this.state.cipherArray}
+            value={JSON.stringify(this.state.dataSource.data)}
             rows="20"
             cols="65"
             id="frequency-output"
