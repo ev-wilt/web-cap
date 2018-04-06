@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link, Switch } from "react-router-dom";
 import FrequencyAnalysis from './Components/FrequencyAnalysis'
 import TextInput from "./Components/TextInput";
+import Worksheet from "./Components/Worksheet";
 
 class App extends Component {
   constructor(props) {
@@ -51,6 +52,7 @@ class App extends Component {
             <span className="mdl-layout-title">WebCAP</span>
             <nav className="mdl-navigation">
               <Link to="/frequency" className="mdl-navigation__link">Frequency Analysis</Link>
+              <Link to="/worksheet" className="mdl-navigation__link">Worksheet</Link>
             </nav>
           </div>
           <main className="mdl-layout__content">
@@ -59,6 +61,9 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/frequency" render={() => (
                     <FrequencyAnalysis state={this.state} />
+                  )}/>
+                  <Route exact path="/worksheet" render={() => (
+                    <Worksheet state={this.state} />
                   )}/>
                 </Switch>
               </div>
