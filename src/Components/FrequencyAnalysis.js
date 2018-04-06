@@ -17,7 +17,8 @@ class FrequencyAnalysis extends Component {
           caption: 'Character Frequency',
         },
         data: []
-      }
+      },
+      formattedData: []
     };
 
     this.splitCipher = this.splitCipher.bind(this);
@@ -26,6 +27,7 @@ class FrequencyAnalysis extends Component {
   splitCipher(splitSize) {
     let ciphertext = this.props.state.ciphertext;
     ciphertext = ciphertext.split(" ").join("");
+    ciphertext = ciphertext.split("\\").join("");
     let newDataSource = {
       chart:{
         caption: 'Character Frequency',
