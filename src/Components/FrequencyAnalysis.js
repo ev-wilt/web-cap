@@ -94,7 +94,7 @@ class FrequencyAnalysis extends Component {
             readOnly={true}
             value={JSON.stringify(this.state.dataSource.data)}
             rows="20"
-            cols="65"
+            cols="50"
             id="frequency-output"
           />
           <h4>Graphical Analysis</h4>
