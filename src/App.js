@@ -4,6 +4,7 @@ import FrequencyAnalysis from './Components/FrequencyAnalysis'
 import TextInput from "./Components/TextInput";
 import Shift from "./Components/Shift";
 import Worksheet from "./Components/Worksheet";
+import Keyword from "./Components/Keyword";
 
 class App extends Component {
   constructor(props) {
@@ -55,6 +56,7 @@ class App extends Component {
               <Link to="/frequency" className="mdl-navigation__link">Frequency Analysis</Link>
               <Link to="/worksheet" className="mdl-navigation__link">Worksheet</Link>
               <Link to="/shift" className="mdl-navigation__link">Caesar Shift</Link>
+              <Link to="/keyword" className="mdl-navigation__link">Keyword Substitution</Link>
             </nav>
           </div>
           <main className="mdl-layout__content">
@@ -69,6 +71,9 @@ class App extends Component {
                   )}/>
                   <Route exact path="/shift" render={() => (
                     <Shift state={this.state} />
+                  )}/>
+                  <Route exact path="/keyword" render={() => (
+                    <Keyword state={this.state} />
                   )}/>
                 </Switch>
               </div>
