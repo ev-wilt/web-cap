@@ -19,9 +19,11 @@ class Worksheet extends Component {
     let alphabet = this.state.alphabet.split(" ").join("");
     let newOutput = this.props.state.ciphertext;
 
-    for (let i = 0; i < guess.length; ++i) {
-      if (guess[i] !== "-") {
-        newOutput = newOutput.split(alphabet[i]).join(guess[i]);
+    for (let i = 0; i < newOutput.length; ++i) {
+      let charLoc = alphabet.indexOf(newOutput[i]);
+
+      if (guess[charLoc] !== "-") {
+        newOutput = newOutput.substr(0, i) + guess[charLoc] + newOutput.substr(i + 1);
       }
     }
 
