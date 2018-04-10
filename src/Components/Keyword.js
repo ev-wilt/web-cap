@@ -21,7 +21,6 @@ class Keyword extends Component {
 
     // Trim any unnecessary characters from the keyword
     for (let i = this.state.keyword.length - 1; i > -1; --i) {
-      console.log(this.state.keyword.substr(0, i - 1));
       if (!this.state.keyword.substr(0, i - 1).includes(this.state.keyword[i])) {
         trimmedKeyword = this.state.keyword[i] + trimmedKeyword;
       }
@@ -66,24 +65,24 @@ class Keyword extends Component {
       <div className="Keyword">
         <div className="mdl-layout__content">
           <h4>Keyword Substitution</h4>
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input className="mdl-textfield__input"
-                   type="text"
+          <div>
+            <label htmlFor="keyword">Keyword</label>
+            <br/>
+            <input type="text"
                    id="keyword"
                    onChange={this.handleKeywordChange}
                    value={this.state.keyword}
             />
-            <label className="mdl-textfield__label" htmlFor="keyword">Keyword</label>
           </div>
           <br/>
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input className="mdl-textfield__input"
-                   type="text"
-                   id="keyword"
+          <div>
+            <label htmlFor="letter">Letter to start from</label>
+            <br/>
+            <input type="text"
+                   id="letter"
                    onChange={this.handleStartChange}
                    value={this.state.startChar}
             />
-            <label className="mdl-textfield__label" htmlFor="keyword">Letter to start from</label>
           </div>
           <br/>
           <button
