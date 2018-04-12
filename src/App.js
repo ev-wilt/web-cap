@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Link, Switch } from "react-router-dom";
-import FrequencyAnalysis from './Components/FrequencyAnalysis'
+import FrequencyAnalysis from "./Components/FrequencyAnalysis";
 import TextInput from "./Components/TextInput";
 import Shift from "./Components/Shift";
 import Worksheet from "./Components/Worksheet";
 import Keyword from "./Components/Keyword";
+import ColumnTransposition from "./Components/ColumnTransposition";
 
 class App extends Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class App extends Component {
               <Link to="/worksheet" className="mdl-navigation__link">Worksheet</Link>
               <Link to="/shift" className="mdl-navigation__link">Caesar Shift</Link>
               <Link to="/keyword" className="mdl-navigation__link">Keyword Substitution</Link>
+              <Link to="/column" className="mdl-navigation__link">Columnar Transposition</Link>
             </nav>
           </div>
           <main className="mdl-layout__content">
@@ -74,6 +76,9 @@ class App extends Component {
                   )}/>
                   <Route exact path="/keyword" render={() => (
                     <Keyword state={this.state} />
+                  )}/>
+                  <Route exact path="/column" render={() => (
+                    <ColumnTransposition state={this.state} />
                   )}/>
                 </Switch>
               </div>
