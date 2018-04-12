@@ -13,11 +13,9 @@ class Keyword extends Component {
     this.handleStartChange = this.handleStartChange.bind(this);
   }
 
-  encodeCiphertext() {
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  createKey(alphabet, key) {
     let startIndex = 26 - alphabet.indexOf(this.state.startChar);
     let trimmedKeyword = "";
-    let key = alphabet;
 
     // Trim any unnecessary characters from the keyword
     for (let i = this.state.keyword.length - 1; i > -1; --i) {
@@ -38,7 +36,15 @@ class Keyword extends Component {
     for (let i = 0; i < startIndex; ++i) {
       key.push(key.shift());
     }
-    key = key.join("");
+
+    return key.join("");
+  }
+
+  encodeCiphertext() {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+    let key = alphabet;
+
+    key = this.createKey(alphabet, key);
 
     // Use the new key
     let newOutput = this.props.state.plaintext;
@@ -46,6 +52,23 @@ class Keyword extends Component {
     for (let i = 0; i < newOutput.length; ++i) {
       let charLoc = alphabet.indexOf(newOutput[i]);
        newOutput = newOutput.substr(0, i) + key[charLoc] + newOutput.substr(i + 1);
+    }
+
+    this.setState({output: newOutput});
+  }
+
+  decodeCiphertext() {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+    let key = alphabet;
+
+    key = this.createKey(alphabet, key);
+
+    // Use the new key
+    let newOutput = this.props.state.ciphertext;
+
+    for (let i = 0; i < newOutput.length; ++i) {
+      let charLoc = key.indexOf(newOutput[i]);
+      newOutput = newOutput.substr(0, i) + alphabet[charLoc] + newOutput.substr(i + 1);
     }
 
     this.setState({output: newOutput});
@@ -85,12 +108,24 @@ class Keyword extends Component {
             />
           </div>
           <br/>
-          <button
-            className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onClick={() => this.encodeCiphertext()}
-          >
-            Encode
-          </button>
+          <div className="mdl-grid">
+            <div className="mdl-cell mdl-cell--4-col">
+              <button
+                className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                onClick={() => this.encodeCiphertext()}
+              >
+                Encode
+              </button>
+            </div>
+            <div className="mdl-cell mdl-cell--4-col">
+              <button
+                className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                onClick={() => this.decodeCiphertext()}
+              >
+                Decode
+              </button>
+            </div>
+          </div>
           <br/>
           <h4>Output</h4>
           <textarea
