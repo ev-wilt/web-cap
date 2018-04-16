@@ -7,6 +7,7 @@ import Worksheet from "./Components/Worksheet";
 import Keyword from "./Components/Keyword";
 import ColumnTransposition from "./Components/ColumnTransposition";
 import Anagram from "./Components/Anagram";
+import Vigenere from "./Components/Vigenere";
 
 class App extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class App extends Component {
               <Link to="/keyword" className="mdl-navigation__link">Keyword Substitution</Link>
               <Link to="/column" className="mdl-navigation__link">Columnar Transposition</Link>
               <Link to="/anagram" className="mdl-navigation__link">Anagram</Link>
+              <Link to="/vigenere" className="mdl-navigation__link">Vigenere</Link>
             </nav>
           </div>
           <main className="mdl-layout__content">
@@ -84,6 +86,9 @@ class App extends Component {
                   )}/>
                   <Route exact path="/anagram" render={() => (
                     <Anagram state={this.state} />
+                  )}/>
+                  <Route exact path="/vigenere" render={() => (
+                    <Vigenere state={this.state} />
                   )}/>
                 </Switch>
               </div>
