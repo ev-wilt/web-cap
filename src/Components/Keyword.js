@@ -40,7 +40,7 @@ class Keyword extends Component {
     return key.join("");
   }
 
-  encodeCiphertext() {
+  encodePlaintext() {
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
     let key = alphabet;
 
@@ -112,7 +112,7 @@ class Keyword extends Component {
             <div className="mdl-cell mdl-cell--4-col">
               <button
                 className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                onClick={() => this.encodeCiphertext()}
+                onClick={() => this.encodePlaintext()}
               >
                 Encode
               </button>
