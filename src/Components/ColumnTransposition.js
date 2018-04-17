@@ -5,60 +5,81 @@ class ColumnTransposition extends Component {
     super (props);
     this.state = {
       keyword: "",
-      startChar: "",
-      output: ""
+      output: "",
+      columns: ""
     };
 
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
-    this.handleStartChange = this.handleStartChange.bind(this);
   }
 
-  encodeCiphertext() {
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    let startIndex = 26 - alphabet.indexOf(this.state.startChar);
-    let trimmedKeyword = "";
-    let key = alphabet;
+  getOrder() {
+    let key = this.state.keyword.toUpperCase();
 
-    // Trim any unnecessary characters from the keyword
-    for (let i = this.state.keyword.length - 1; i > -1; --i) {
-      if (!this.state.keyword.substr(0, i - 1).includes(this.state.keyword[i])) {
-        trimmedKeyword = this.state.keyword[i] + trimmedKeyword;
+    // Find ordering of letters in keyword
+    let order = [];
+    let result = [];
+
+    for (let i = 0; i < key.length; ++i) {
+      order.push(key.charCodeAt(i) - 64)
+    }
+
+    for (let i = 0; i < order.length; ++i) {
+      let counter = 0;
+      for (let j = 0; j < order.length; ++j) {
+        if (i !== j && order[i] > order[j]) {
+          ++counter;
+        }
+      }
+      while (result.includes(counter)) {
+        ++counter;
+      }
+      result[i] = counter;
+    }
+
+    return result;
+  }
+
+  encodePlaintext() {
+
+    // Build columns output first
+    let plaintext = this.props.state.plaintext;
+    let columnOutput = "";
+    let columnArray = [[]];
+
+    for (let i = 0; i < plaintext.length; ++i) {
+      if (i !== 0 && i % this.state.keyword.length === 0 ) {
+        columnOutput += "\n";
+        columnArray.push([]);
+      }
+      columnOutput += plaintext[i];
+      columnArray[Math.floor(i / this.state.keyword.length)].push(plaintext[i]);
+
+    }
+
+    // Pad with q's if needed
+    while (plaintext.length % this.state.keyword.length !== 0) {
+      plaintext += "q";
+      columnOutput += "q";
+      columnArray[columnArray.length - 1].push("q");
+    }
+    this.setState({columns: columnOutput});
+
+    // Now build the ciphertext
+    let order = this.getOrder();
+    let newOutput = "";
+
+    for (let i = 0; i < order.length; ++i) {
+      for (let j = 0; j < columnArray.length; ++j) {
+        newOutput += columnArray[j][order[i]];
       }
     }
-
-    // Trim the alphabet of characters in keyword
-    for (let i = 0; i < trimmedKeyword.length; ++i) {
-      key = key.split(trimmedKeyword[i]).join("");
-    }
-
-    // Make the key and shift it as necessary
-    key = trimmedKeyword + key;
-    key = key.split("");
-
-    for (let i = 0; i < startIndex; ++i) {
-      key.push(key.shift());
-    }
-    key = key.join("");
-
-    // Use the new key
-    let newOutput = this.props.state.plaintext;
-
-    for (let i = 0; i < newOutput.length; ++i) {
-      let charLoc = alphabet.indexOf(newOutput[i]);
-      newOutput = newOutput.substr(0, i) + key[charLoc] + newOutput.substr(i + 1);
-    }
-
     this.setState({output: newOutput});
+
   }
 
   handleKeywordChange(event) {
     this.setState({keyword:event.target.value});
   }
-
-  handleStartChange(event) {
-    this.setState({startChar:event.target.value});
-  }
-
 
   render() {
     return (
@@ -75,22 +96,20 @@ class ColumnTransposition extends Component {
             />
           </div>
           <br/>
-          <div>
-            <label htmlFor="letter">Letter to start from</label>
-            <br/>
-            <input type="text"
-                   id="letter"
-                   onChange={this.handleStartChange}
-                   value={this.state.startChar}
-            />
-          </div>
-          <br/>
           <button
             className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onClick={() => this.encodeCiphertext()}
+            onClick={() => this.encodePlaintext()}
           >
             Encode
           </button>
+          <br/>
+          <h4>Column Format</h4>
+          <textarea
+            readOnly={true}
+            value={this.state.columns}
+            rows="20"
+            cols="50"
+          />
           <br/>
           <h4>Output</h4>
           <textarea
