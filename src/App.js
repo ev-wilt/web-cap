@@ -8,6 +8,7 @@ import Keyword from "./Components/Keyword";
 import ColumnTransposition from "./Components/ColumnTransposition";
 import Anagram from "./Components/Anagram";
 import Vigenere from "./Components/Vigenere";
+import Kasiski from "./Components/Kasiski";
 
 class App extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ class App extends Component {
               <Link to="/column" className="mdl-navigation__link">Columnar Transposition</Link>
               <Link to="/anagram" className="mdl-navigation__link">Anagram</Link>
               <Link to="/vigenere" className="mdl-navigation__link">Vigenere</Link>
+              <Link to="/kasiski" className="mdl-navigation__link">Kasiski</Link>
             </nav>
           </div>
           <main className="mdl-layout__content">
@@ -89,6 +91,9 @@ class App extends Component {
                   )}/>
                   <Route exact path="/vigenere" render={() => (
                     <Vigenere state={this.state} />
+                  )}/>
+                  <Route exact path="/kasiski" render={() => (
+                    <Kasiski state={this.state} />
                   )}/>
                 </Switch>
               </div>
