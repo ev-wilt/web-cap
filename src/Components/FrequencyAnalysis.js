@@ -18,7 +18,7 @@ class FrequencyAnalysis extends Component {
         },
         data: []
       },
-      formattedData: []
+      formattedData: ""
     };
 
     this.splitCipher = this.splitCipher.bind(this);
@@ -35,28 +35,60 @@ class FrequencyAnalysis extends Component {
       data: []
     };
 
-    for (let i = 0; i < ciphertext.length; ++i) {
-      let isInData = false;
-      let currentString = ciphertext.slice(i, i + splitSize + 1);
-      let value = ciphertext.split(currentString).length - 1;
+    // Show all characters if doing a single split
+    if (splitSize === 0) {
+      const alphabet = "abcefghijklmnopqrstuvwxyz";
 
-      for (let j = 0; j < newDataSource.data.length; ++j) {
-        if (newDataSource.data[j].label === currentString) {
-          isInData = true;
+      for (let i = 0; i < alphabet.length; ++i) {
+        newDataSource.data.push({
+          label: alphabet[i],
+          value: 0
+        });
+      }
+
+      for (let i = 0; i < ciphertext.length; ++i) {
+        let currentString = ciphertext.slice(i, i + splitSize + 1);
+        let value = ciphertext.split(currentString).length - 1;
+
+        for (let j = 0; j < newDataSource.data.length; ++j) {
+          if (newDataSource.data[j].label === currentString) {
+            newDataSource.data[j].value = value;
+          }
         }
       }
 
-      if (isInData === false && currentString.length === splitSize + 1) {
-        newDataSource.data.push({
-          label: currentString,
-          value: value
-        });
+    }
+
+    // Build graph normally otherwise
+    else {
+      for (let i = 0; i < ciphertext.length; ++i) {
+        let isInData = false;
+        let currentString = ciphertext.slice(i, i + splitSize + 1);
+        let value = ciphertext.split(currentString).length - 1;
+
+        for (let j = 0; j < newDataSource.data.length; ++j) {
+          if (newDataSource.data[j].label === currentString) {
+            isInData = true;
+          }
+        }
+
+        if (isInData === false && currentString.length === splitSize + 1) {
+          newDataSource.data.push({
+            label: currentString,
+            value: value
+          });
+        }
       }
     }
 
-    this.setState({
-      dataSource: newDataSource
-    });
+    // Build text output
+    let newFormattedData = "Occurrences: \n";
+    for (let i = 0; i < newDataSource.data.length; ++i) {
+      newFormattedData += newDataSource.data[i].label + ": " + newDataSource.data[i].value + "\n";
+    }
+
+    this.setState({dataSource: newDataSource});
+    this.setState({formattedData: newFormattedData});
   }
 
   render() {
@@ -92,7 +124,7 @@ class FrequencyAnalysis extends Component {
           </div>
           <textarea
             readOnly={true}
-            value={JSON.stringify(this.state.dataSource.data)}
+            value={this.state.formattedData}
             rows="20"
             cols="50"
             id="frequency-output"
