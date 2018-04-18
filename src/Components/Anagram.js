@@ -81,7 +81,6 @@ class Anagram extends Component {
               </button>
             </div>
           </div>
-          <br/>
           <h4>Output</h4>
           <textarea
             readOnly={true}
