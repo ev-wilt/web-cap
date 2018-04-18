@@ -28,14 +28,26 @@ class Shift extends Component {
     }
   }
 
-  shift(event) {
+  decode(event) {
     let alphabet = "abcdefghijklmnopqrstuvwxyz";
     let newOutput = this.props.state.ciphertext.split(" ").join("").split("\n").join("");
-    let amount = this.state.amount;
+    let amount = parseInt(this.state.amount);
     let shifted_alphabet = alphabet.substr(amount, 26-amount) + alphabet.substr(0, amount);
     for(let i = 0; i < newOutput.length; ++i) {
       let charLoc = shifted_alphabet.indexOf(newOutput[i]);
       newOutput = newOutput.substr(0, i) + alphabet[charLoc] + newOutput.substr(i + 1);
+    }
+    this.setState({output: newOutput});
+  }
+
+  encode(event) {
+    let alphabet = "abcdefghijklmnopqrstuvwxyz";
+    let newOutput = this.props.state.plaintext.split(" ").join("").split("\n").join("");
+    let amount = parseInt(this.state.amount);
+    let shifted_alphabet = alphabet.substr(amount, 26-amount) + alphabet.substr(0, amount);
+    for(let i = 0; i < newOutput.length; ++i) {
+      let charLoc = alphabet.indexOf(newOutput[i]);
+      newOutput = newOutput.substr(0, i) + shifted_alphabet[charLoc] + newOutput.substr(i + 1);
     }
     this.setState({output: newOutput});
   }
@@ -49,7 +61,7 @@ class Shift extends Component {
     return (
       <div className="Shift">
         <div className="mdl-layout__content">
-          <h4>Shift Analysis</h4>
+          <h4>Ciphertext Analysis</h4>
           <div className="mdl-grid">
             <button
                   className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
@@ -65,20 +77,28 @@ class Shift extends Component {
             rows="20"
           />
           <h4>Caesar Shift</h4>
+          <label htmlFor="amount">Shift Amount</label>
+          <br/>
+          <input
+            id="amount"
+            onChange={this.handleAmountChange}
+            value={this.state.amount}
+          />
           <div className="mdl-grid">
-            <div className="mdl-cell mdl-cell--2-col">
-              <textarea
-                onChange={this.handleAmountChange}
-                value={this.state.amount}
-                cols="3"
-              />
-            </div>
-            <div className="mdl-cell mdl-cell--2-col">
+            <div className="mdl-cell mdl-cell--3-col">
             <button
                     className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                    onClick={() => this.shift()}
+                    onClick={() => this.decode()}
               >
-            Shift
+            Decode
+            </button>
+            </div>
+            <div className="mdl-cell mdl-cell--3-col">
+            <button
+                    className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    onClick={() => this.encode()}
+              >
+            Encode
             </button>
             </div>
           </div>
