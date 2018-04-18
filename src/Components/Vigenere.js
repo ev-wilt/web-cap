@@ -4,13 +4,13 @@ class Vigenere extends Component {
   constructor(props) {
     super (props);
     this.state = {      
-      keyword: "",
+      keyword: "key",
       output: ""
     };
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
   }
 
-  vigenere(event) {
+  decode(event) {
     let baseAlphabet = "abcdefghijklmnopqrstuvwxyz";
     let vigenereAlphabets = [];
     for(let i = 0; i < 26; ++i) { 
@@ -25,6 +25,25 @@ class Vigenere extends Component {
       let secondIndex = vigenereAlphabets[firstIndex].indexOf(newOutput[i]);
 
       newOutput = newOutput.substr(0, i) + baseAlphabet[secondIndex] + newOutput.substr(i + 1);
+    }
+    this.setState({output: newOutput});
+  }
+
+  encode(event) {
+    let baseAlphabet = "abcdefghijklmnopqrstuvwxyz";
+    let vigenereAlphabets = [];
+    for(let i = 0; i < 26; ++i) { 
+      vigenereAlphabets[i] = baseAlphabet.substr(i, 26-i) + baseAlphabet.substr(0, i);
+    }
+    let newOutput = this.props.state.plaintext.split(" ").join("").split("\n").join("");
+    let keyword = this.state.keyword;
+    console.log(newOutput);
+    for(let i = 0; i < newOutput.length; ++i) {
+      let keywordIndex = i%keyword.length;
+      let firstIndex = baseAlphabet.indexOf(keyword[keywordIndex]);
+      let secondIndex = baseAlphabet.indexOf(newOutput[i]);
+
+      newOutput = newOutput.substr(0, i) + vigenereAlphabets[firstIndex][secondIndex] + newOutput.substr(i + 1);
     }
     this.setState({output: newOutput});
   }
@@ -47,12 +66,21 @@ class Vigenere extends Component {
                 cols="10"
               />
             </div>
-            <div className="mdl-cell mdl-cell--5-col">
+            <div className="mdl-cell mdl-cell--3-col">
             <button
                     className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                    onClick={() => this.vigenere()}
+                    onClick={() => this.decode()}
               >
-            Decipher
+            Decode
+            </button>
+            </div>
+
+            <div className="mdl-cell mdl-cell--3-col">
+            <button
+                    className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    onClick={() => this.encode()}
+              >
+            Encode
             </button>
             </div>
           </div>
