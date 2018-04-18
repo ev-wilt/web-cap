@@ -9,6 +9,7 @@ import ColumnTransposition from "./Components/ColumnTransposition";
 import Anagram from "./Components/Anagram";
 import Vigenere from "./Components/Vigenere";
 import Kasiski from "./Components/Kasiski";
+import CoincidenceIndex from "./Components/CoincidenceIndex";
 
 class App extends Component {
   constructor(props) {
@@ -65,6 +66,7 @@ class App extends Component {
               <Link to="/anagram" className="mdl-navigation__link">Anagram</Link>
               <Link to="/vigenere" className="mdl-navigation__link">Vigenere</Link>
               <Link to="/kasiski" className="mdl-navigation__link">Kasiski</Link>
+              <Link to="/coincidence" className="mdl-navigation__link">Index of Coincidence</Link>
             </nav>
           </div>
           <main className="mdl-layout__content">
@@ -94,6 +96,9 @@ class App extends Component {
                   )}/>
                   <Route exact path="/kasiski" render={() => (
                     <Kasiski state={this.state} />
+                  )}/>
+                  <Route exact path="/coincidence" render={() => (
+                    <CoincidenceIndex state={this.state} />
                   )}/>
                 </Switch>
               </div>
