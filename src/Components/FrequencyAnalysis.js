@@ -72,7 +72,7 @@ class FrequencyAnalysis extends Component {
           }
         }
 
-        if (isInData === false && currentString.length === splitSize + 1) {
+        if (isInData === false && currentString.length === splitSize + 1 && value > 1) {
           newDataSource.data.push({
             label: currentString,
             value: value
