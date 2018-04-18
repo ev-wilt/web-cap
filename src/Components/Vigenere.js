@@ -18,7 +18,6 @@ class Vigenere extends Component {
     }
     let newOutput = this.props.state.ciphertext.split(" ").join("").split("\n").join("");
     let keyword = this.state.keyword;
-    console.log(newOutput);
     for(let i = 0; i < newOutput.length; ++i) {
       let keywordIndex = i%keyword.length;
       let firstIndex = baseAlphabet.indexOf(keyword[keywordIndex]);
@@ -37,7 +36,6 @@ class Vigenere extends Component {
     }
     let newOutput = this.props.state.plaintext.split(" ").join("").split("\n").join("");
     let keyword = this.state.keyword;
-    console.log(newOutput);
     for(let i = 0; i < newOutput.length; ++i) {
       let keywordIndex = i%keyword.length;
       let firstIndex = baseAlphabet.indexOf(keyword[keywordIndex]);
@@ -58,14 +56,15 @@ class Vigenere extends Component {
       <div className="Shift">
         <div className="mdl-layout__content">
           <h4>Vigenere Cipher</h4>
+          <label htmlFor="keyword">Keyword</label>
+          <br/>
+          <input type="text"
+            id="keyword"
+            onChange={this.handleKeywordChange}
+            value={this.state.keyword}
+          />
+          <br/>
           <div className="mdl-grid">
-            <div className="mdl-cell mdl-cell--4-col">
-              <textarea
-                onChange={this.handleKeywordChange}
-                value={this.state.keyword}
-                cols="10"
-              />
-            </div>
             <div className="mdl-cell mdl-cell--3-col">
             <button
                     className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
