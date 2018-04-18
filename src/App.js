@@ -58,15 +58,17 @@ class App extends Component {
           <div className="mdl-layout__drawer">
             <span className="mdl-layout-title">WebCAP</span>
             <nav className="mdl-navigation">
+              <span style={{color: "black"}} className="mdl-navigation__link">Tools</span>
               <Link to="/frequency" className="mdl-navigation__link">Frequency Analysis</Link>
               <Link to="/worksheet" className="mdl-navigation__link">Worksheet</Link>
+              <Link to="/kasiski" className="mdl-navigation__link">Kasiski</Link>
+              <Link to="/coincidence" className="mdl-navigation__link">Index of Coincidence</Link>
+              <span style={{color: "black"}} className="mdl-navigation__link">Ciphers</span>
               <Link to="/shift" className="mdl-navigation__link">Caesar Shift</Link>
               <Link to="/keyword" className="mdl-navigation__link">Keyword Substitution</Link>
               <Link to="/column" className="mdl-navigation__link">Columnar Transposition</Link>
               <Link to="/anagram" className="mdl-navigation__link">Anagram</Link>
               <Link to="/vigenere" className="mdl-navigation__link">Vigenere</Link>
-              <Link to="/kasiski" className="mdl-navigation__link">Kasiski</Link>
-              <Link to="/coincidence" className="mdl-navigation__link">Index of Coincidence</Link>
             </nav>
           </div>
           <main className="mdl-layout__content">
