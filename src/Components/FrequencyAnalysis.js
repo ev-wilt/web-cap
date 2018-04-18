@@ -25,9 +25,7 @@ class FrequencyAnalysis extends Component {
   }
 
   splitCipher(splitSize) {
-    let ciphertext = this.props.state.ciphertext;
-    ciphertext = ciphertext.split(" ").join("");
-    ciphertext = ciphertext.split("\\").join("");
+    let ciphertext = this.props.state.ciphertext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let newDataSource = {
       chart:{
         caption: 'Character Frequency',

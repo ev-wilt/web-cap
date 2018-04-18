@@ -42,7 +42,7 @@ class ColumnTransposition extends Component {
   encodePlaintext() {
 
     // Build columns output first
-    let plaintext = this.props.state.plaintext;
+    let plaintext = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let columnOutput = "";
     let columnArray = [[]];
 

@@ -58,9 +58,7 @@ class Kasiski extends Component {
   }
 
   splitCipher(splitSize) {
-    let ciphertext = this.props.state.ciphertext.split(" ").join("").split("\n").join("");
-    ciphertext = ciphertext.split(" ").join("");
-    ciphertext = ciphertext.split("\\").join("");
+    let ciphertext = this.props.state.ciphertext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let data = [];
 
     for (let i = 0; i < ciphertext.length; ++i) {

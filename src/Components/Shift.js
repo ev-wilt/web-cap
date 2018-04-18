@@ -30,7 +30,7 @@ class Shift extends Component {
 
   decode(event) {
     let alphabet = "abcdefghijklmnopqrstuvwxyz";
-    let newOutput = this.props.state.ciphertext.split(" ").join("").split("\n").join("");
+    let newOutput = this.props.state.ciphertext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let amount = parseInt(this.state.amount);
     let shifted_alphabet = alphabet.substr(amount, 26-amount) + alphabet.substr(0, amount);
     for(let i = 0; i < newOutput.length; ++i) {
@@ -42,7 +42,7 @@ class Shift extends Component {
 
   encode(event) {
     let alphabet = "abcdefghijklmnopqrstuvwxyz";
-    let newOutput = this.props.state.plaintext.split(" ").join("").split("\n").join("");
+    let newOutput = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let amount = parseInt(this.state.amount);
     let shifted_alphabet = alphabet.substr(amount, 26-amount) + alphabet.substr(0, amount);
     for(let i = 0; i < newOutput.length; ++i) {

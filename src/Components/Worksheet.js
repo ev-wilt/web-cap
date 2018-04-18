@@ -17,7 +17,7 @@ class Worksheet extends Component {
 
     let guess = event.target.value.split(" ").join("");
     let alphabet = this.state.alphabet.split(" ").join("");
-    let newOutput = this.props.state.ciphertext.toLowerCase();
+    let newOutput = this.props.state.ciphertext.replace(/[^0-9a-z]/gi, '').toLowerCase();
 
     for (let i = 0; i < newOutput.length; ++i) {
       let charLoc = alphabet.indexOf(newOutput[i]);

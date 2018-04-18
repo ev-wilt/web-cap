@@ -15,14 +15,13 @@ class Keyword extends Component {
 
   createKey(alphabet, key) {
     let startIndex = 26 - alphabet.indexOf(this.state.startChar);
+    let keywordSet = new Set(this.state.keyword.split(""));
     let trimmedKeyword = "";
 
     // Trim any unnecessary characters from the keyword
-    for (let i = this.state.keyword.length - 1; i > -1; --i) {
-      if (!this.state.keyword.substr(0, i - 1).includes(this.state.keyword[i])) {
-        trimmedKeyword = this.state.keyword[i] + trimmedKeyword;
-      }
-    }
+    keywordSet.forEach(function (value) {
+      trimmedKeyword += value;
+    });
 
     // Trim the alphabet of characters in keyword
     for (let i = 0; i < trimmedKeyword.length; ++i) {
@@ -47,7 +46,7 @@ class Keyword extends Component {
     key = this.createKey(alphabet, key);
 
     // Use the new key
-    let newOutput = this.props.state.plaintext;
+    let newOutput = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
 
     for (let i = 0; i < newOutput.length; ++i) {
       let charLoc = alphabet.indexOf(newOutput[i]);
@@ -64,7 +63,7 @@ class Keyword extends Component {
     key = this.createKey(alphabet, key);
 
     // Use the new key
-    let newOutput = this.props.state.ciphertext;
+    let newOutput = this.props.state.ciphertext.replace(/[^0-9a-z]/gi, '').toLowerCase();
 
     for (let i = 0; i < newOutput.length; ++i) {
       let charLoc = key.indexOf(newOutput[i]);

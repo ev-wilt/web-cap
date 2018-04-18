@@ -16,7 +16,7 @@ class Vigenere extends Component {
     for(let i = 0; i < 26; ++i) { 
       vigenereAlphabets[i] = baseAlphabet.substr(i, 26-i) + baseAlphabet.substr(0, i);
     }
-    let newOutput = this.props.state.ciphertext.split(" ").join("").split("\n").join("");
+    let newOutput = this.props.state.ciphertext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let keyword = this.state.keyword;
     for(let i = 0; i < newOutput.length; ++i) {
       let keywordIndex = i%keyword.length;
@@ -34,7 +34,7 @@ class Vigenere extends Component {
     for(let i = 0; i < 26; ++i) { 
       vigenereAlphabets[i] = baseAlphabet.substr(i, 26-i) + baseAlphabet.substr(0, i);
     }
-    let newOutput = this.props.state.plaintext.split(" ").join("").split("\n").join("");
+    let newOutput = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let keyword = this.state.keyword;
     for(let i = 0; i < newOutput.length; ++i) {
       let keywordIndex = i%keyword.length;
