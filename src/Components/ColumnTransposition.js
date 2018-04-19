@@ -40,7 +40,38 @@ class ColumnTransposition extends Component {
   }
 
   encodePlaintext() {
+    let columnArray = this.getColumnArray();
 
+    // Now build the ciphertext
+    let order = this.getOrder();
+    let newOutput = "";
+
+    for (let i = 0; i < order.length; ++i) {
+      for (let j = 0; j < columnArray.length; ++j) {
+        newOutput += columnArray[j][order[i]];
+      }
+    }
+    this.setState({output: newOutput});
+
+  }
+
+  decodeCiphertext() {
+    let columnArray = this.getColumnArray();
+
+    // Now build the ciphertext
+    let order = this.getOrder();
+    let newOutput = "";
+
+    for (let i = 0; i < columnArray.length; ++i) {
+      for (let j = 0; j < columnArray[i].length; ++j) {
+        newOutput += columnArray[i][j];
+      }
+    }
+    this.setState({output: newOutput});
+
+  }
+
+  getColumnArray() {
     // Build columns output first
     let plaintext = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let columnOutput = "";
@@ -62,19 +93,9 @@ class ColumnTransposition extends Component {
       columnOutput += "q";
       columnArray[columnArray.length - 1].push("q");
     }
+
     this.setState({columns: columnOutput});
-
-    // Now build the ciphertext
-    let order = this.getOrder();
-    let newOutput = "";
-
-    for (let i = 0; i < order.length; ++i) {
-      for (let j = 0; j < columnArray.length; ++j) {
-        newOutput += columnArray[j][order[i]];
-      }
-    }
-    this.setState({output: newOutput});
-
+    return columnArray;
   }
 
   handleKeywordChange(event) {
@@ -95,14 +116,24 @@ class ColumnTransposition extends Component {
                    value={this.state.keyword}
             />
           </div>
-          <br/>
-          <button
-            className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-            onClick={() => this.encodePlaintext()}
-          >
-            Encode
-          </button>
-          <br/>
+          <div className="mdl-grid">
+            <div className="mdl-cell mdl-cell--4-col">
+              <button
+                className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                onClick={() => this.encodePlaintext()}
+              >
+                Encode
+              </button>
+            </div>
+            <div className="mdl-cell mdl-cell--4-col">
+              <button
+                className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                onClick={() => this.decodeCiphertext()}
+              >
+                Decode
+              </button>
+            </div>
+          </div>
           <h4>Column Format</h4>
           <textarea
             readOnly={true}

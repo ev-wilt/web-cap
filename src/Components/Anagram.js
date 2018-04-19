@@ -43,10 +43,27 @@ class Anagram extends Component {
     let newOutput = "";
     let plaintext = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
 
+    // Pad with q's if needed
+    while (plaintext.length % this.state.keyword.length !== 0) {
+      plaintext += "q";
+    }
+
     for (let i = 0; i < plaintext.length; ++i) {
-      if (plaintext[order[i % 5] + (Math.floor(i / 5) * 5)] !== undefined) {
-        newOutput += plaintext[order[i % 5] + (Math.floor(i / 5) * 5)];
-      }
+      let charLoc = order[i % order.length] + (Math.floor(i / order.length) * order.length);
+      newOutput += plaintext[charLoc];
+    }
+
+    this.setState({output: newOutput});
+  }
+
+  decodeCiphertext() {
+    let order = this.getOrder();
+    let newOutput = "";
+    let ciphertext = this.props.state.ciphertext.replace(/[^0-9a-z]/gi, '').toLowerCase();
+
+    for (let i = 0; i < ciphertext.length; ++i) {
+      let charLoc = order[i % order.length] + (Math.floor(i / order.length) * order.length);
+      newOutput = newOutput.substr(0, charLoc) + ciphertext[i] + newOutput.substr(charLoc);
     }
 
     this.setState({output: newOutput});
@@ -78,6 +95,14 @@ class Anagram extends Component {
                 onClick={() => this.encodePlaintext()}
               >
                 Encode
+              </button>
+            </div>
+            <div className="mdl-cell mdl-cell--4-col">
+              <button
+                className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                onClick={() => this.decodeCiphertext()}
+              >
+                Decode
               </button>
             </div>
           </div>
