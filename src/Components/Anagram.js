@@ -40,6 +40,7 @@ class Anagram extends Component {
 
   encodePlaintext() {
     let order = this.getOrder();
+    console.log(order);
     let newOutput = "";
     let plaintext = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
 
