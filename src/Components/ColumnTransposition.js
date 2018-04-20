@@ -40,38 +40,6 @@ class ColumnTransposition extends Component {
   }
 
   encodePlaintext() {
-    let columnArray = this.getColumnArray();
-
-    // Now build the ciphertext
-    let order = this.getOrder();
-    let newOutput = "";
-
-    for (let i = 0; i < order.length; ++i) {
-      for (let j = 0; j < columnArray.length; ++j) {
-        newOutput += columnArray[j][order[i]];
-      }
-    }
-    this.setState({output: newOutput});
-
-  }
-
-  decodeCiphertext() {
-    let columnArray = this.getColumnArray();
-
-    // Now build the ciphertext
-    let order = this.getOrder();
-    let newOutput = "";
-
-    for (let i = 0; i < columnArray.length; ++i) {
-      for (let j = 0; j < columnArray[i].length; ++j) {
-        newOutput += columnArray[i][j];
-      }
-    }
-    this.setState({output: newOutput});
-
-  }
-
-  getColumnArray() {
     // Build columns output first
     let plaintext = this.props.state.plaintext.replace(/[^0-9a-z]/gi, '').toLowerCase();
     let columnOutput = "";
@@ -95,7 +63,44 @@ class ColumnTransposition extends Component {
     }
 
     this.setState({columns: columnOutput});
-    return columnArray;
+
+    // Now build the ciphertext
+    let order = this.getOrder();
+    let newOutput = "";
+
+    for (let i = 0; i < order.length; ++i) {
+      for (let j = 0; j < columnArray.length; ++j) {
+        newOutput += columnArray[j][order[i]];
+      }
+    }
+    this.setState({output: newOutput});
+
+  }
+
+  decodeCiphertext() {
+    let order = this.getOrder();
+    let columnArray = [];
+    let ciphertext = this.props.state.ciphertext;
+    let rows = ciphertext.length / this.state.keyword.length;
+
+    for (let i = 0; i < this.state.keyword.length; ++i) {
+      columnArray.push([]);
+    }
+
+    for (let i = 0; i < order.length; ++i) {
+      let currentSub = ciphertext.substring(i * rows, (i * rows) + rows);
+      currentSub = currentSub.split("");
+      columnArray[order[i]] = currentSub;
+    }
+    let newOutput = "";
+
+    for (let i = 0; i < rows; ++i) {
+      for (let j = 0; j < this.state.keyword.length; ++j) {
+        newOutput += columnArray[j][i];
+      }
+    }
+    this.setState({output: newOutput});
+
   }
 
   handleKeywordChange(event) {
